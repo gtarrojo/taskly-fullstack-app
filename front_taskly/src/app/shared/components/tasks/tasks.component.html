@@ -1,0 +1,21 @@
+@if (!isMobile) {
+  <as-split direction="horizontal" unit="percent" [gutterSize]="3" style="height: 100%;">
+    <as-split-area [size]="20">
+      <app-list-groups (filteredTasks)="onFilteredTasks($event)" [isCourse]="isCourse" [course_uuid]="course_uuid" [showAdditionalFilters]="true"></app-list-groups>
+    </as-split-area>
+    <as-split-area [size]="40">
+      <app-task-list [tasks]="tasks" [isCourse]="isCourse" [isTeacher]="isTeacher" [selectedFilter]="selectedFilter"></app-task-list>
+    </as-split-area>
+    <as-split-area [size]="40">
+      <app-task-detail [isCourse]="isCourse"></app-task-detail>
+    </as-split-area>
+  </as-split>
+} @else {
+  @if (currentView === 'groups') {
+    <app-list-groups (filteredTasks)="onFilteredTasks($event)" [isCourse]="isCourse" [course_uuid]="course_uuid" [showAdditionalFilters]="false" (navigateToList)="goToList()"></app-list-groups>
+  } @else if (currentView === 'list') {
+    <app-task-list [tasks]="tasks" [isCourse]="isCourse" [isTeacher]="isTeacher" [selectedFilter]="selectedFilter" [showBackButton]="true" (back)="goToGroups()" (selectTaskMobile)="goToDetail()" (filterChange)="onFilterChange($event)"></app-task-list>
+  } @else if (currentView === 'detail') {
+    <app-task-detail [isCourse]="isCourse" [showBackButton]="true" (back)="goToList()"></app-task-detail>
+  }
+}

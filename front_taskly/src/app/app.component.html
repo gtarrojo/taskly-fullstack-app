@@ -1,0 +1,13 @@
+<div class="flex flex-col min-h-screen justify-between h-full">
+  @if (showHeaderAndFooter) {
+    <app-header></app-header>
+  }
+  <main class="flex-1 flex items-stretch">
+    <div class="flex-1 flex items-center justify-center custom-container">
+      <router-outlet />
+    </div>
+  </main>
+  @if (showHeaderAndFooter) {
+    <app-footer></app-footer>
+  }
+</div>

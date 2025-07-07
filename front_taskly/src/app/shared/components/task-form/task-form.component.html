@@ -1,0 +1,170 @@
+<div class="bg-custom-background dark:bg-custom-background-dark p-4 rounded-md">
+  <div class="flex justify-between items-center mb-4">
+    <div class="flex items-center">
+      @if (showBackButton) {
+        <button (click)="back.emit()"
+                class="mr-2 text-custom-text-main dark:text-custom-text-main-dark hover:text-custom-accent"
+                aria-label="Atrás">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      }
+    </div>
+    <h3 class="text-lg font-medium text-custom-text-main dark:text-custom-text-main-dark">Nueva Tarea</h3>
+    <div></div>
+  </div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    <div class="space-y-2">
+      <input class="w-full bg-custom-background dark:bg-custom-input-background-dark text-custom-text-main dark:text-custom-text-main-dark border border-custom-border dark:border-custom-border-dark rounded p-2 focus:border-custom-accent focus:outline-none"
+             formControlName="title"
+             placeholder="Título de la tarea"
+             [readonly]="shouldApplyRestrictions"
+             required />
+      @if (taskForm.get('title')?.touched && taskForm.get('title')?.invalid) {
+        <div class="text-custom-error text-xs">El título es obligatorio.</div>
+      }
+
+      <textarea class="w-full bg-custom-background dark:bg-custom-input-background-dark text-custom-text-main dark:text-custom-text-main-dark border border-custom-border dark:border-custom-border-dark rounded p-2 focus:border-custom-accent focus:outline-none resize-none"
+                rows="2"
+                formControlName="description"
+                placeholder="Describe la tarea..."
+                [readonly]="shouldApplyRestrictions"
+                required></textarea>
+    </div>
+
+    <!-- Fecha y hora -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+      <div class="relative">
+        <input matInput [matDatepicker]="picker"
+               formControlName="due_date"
+               class="w-full bg-custom-background dark:bg-custom-input-background-dark text-custom-text-main dark:text-custom-text-main-dark border border-custom-border dark:border-custom-border-dark rounded p-2 pr-8 focus:border-custom-accent focus:outline-none"
+               (click)="picker.open()"
+               [readonly]="shouldApplyRestrictions"
+               placeholder="Fecha"
+               required />
+        <mat-datepicker-toggle class="absolute right-2 top-1/2 -translate-y-1/2 text-custom-text-secondary z-[40]"
+                              [for]="picker"
+                              [disabled]="shouldApplyRestrictions">
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </div>
+
+      <div class="relative">
+        <input matInput [matTimepicker]="startPicker"
+               formControlName="time_start"
+               class="w-full bg-custom-background dark:bg-custom-input-background-dark text-custom-text-main dark:text-custom-text-main-dark border border-custom-border dark:border-custom-border-dark rounded p-2 pr-8 focus:border-custom-accent focus:outline-none"
+               [readonly]="shouldApplyRestrictions"
+               placeholder="Hora inicio"
+               required />
+        <mat-timepicker-toggle class="absolute right-2 top-1/2 -translate-y-1/2 text-custom-text-secondary"
+                              [for]="startPicker"
+                              [disabled]="shouldApplyRestrictions">
+        </mat-timepicker-toggle>
+        <mat-timepicker #startPicker/>
+        @if (taskForm.get('time_start')?.touched && taskForm.get('time_start')?.invalid) {
+          <div class="text-custom-error text-xs mt-1">
+            La hora de inicio es obligatoria.
+          </div>
+        }
+      </div>
+
+      <div class="relative">
+        <select formControlName="time_estimated"
+                class="w-full bg-custom-background dark:bg-custom-input-background-dark text-custom-text-main dark:text-custom-text-main-dark border border-custom-border dark:border-custom-border-dark rounded p-2 pr-8 focus:border-custom-accent focus:outline-none appearance-none"
+                [disabled]="shouldApplyRestrictions"
+                required>
+          <option value="">Duración</option>
+          <option value="15">15 min</option>
+          <option value="30">30 min</option>
+          <option value="45">45 min</option>
+          <option value="60">1 hora</option>
+          <option value="90">1 hora 30</option>
+          <option value="120">2 horas</option>
+          <option value="150">2 horas 30</option>
+          <option value="180">3 horas</option>
+          <option value="240">4 horas</option>
+        </select>
+        <mat-icon class="absolute right-2 top-1/2 -translate-y-1/2 text-custom-text-secondary pointer-events-none">
+          schedule
+        </mat-icon>
+        @if (taskForm.get('time_estimated')?.touched && taskForm.get('time_estimated')?.invalid) {
+          <div class="text-custom-error text-xs mt-1">
+            La duración es obligatoria.
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Prioridad -->
+    <div class="bg-custom-primary-light dark:bg-custom-panel-dark border border-custom-border dark:border-custom-border-dark p-2 rounded">
+      <div class="flex items-center justify-center gap-6">
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox"
+                 formControlName="is_urgent"
+                 class="w-4 h-4 accent-custom-accent">
+          <span class="text-sm text-custom-text-main dark:text-custom-text-main-dark">Urgente</span>
+        </label>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox"
+                 formControlName="is_important"
+                 class="w-4 h-4 accent-custom-accent">
+          <span class="text-sm text-custom-text-main dark:text-custom-text-main-dark">Importante</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Subtareas -->
+    <div class="bg-custom-background dark:bg-custom-input-background-dark border border-custom-border dark:border-custom-border-dark p-3 rounded">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-sm font-medium text-custom-text-main dark:text-custom-text-main-dark">Subtareas</h3>
+        @if (!shouldApplyRestrictions) {
+          <button type="button"
+                  class="text-custom-accent hover:text-custom-accent-dark"
+                  (click)="addSubtask()">
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        }
+      </div>
+
+      @if (subtasks.length > 0) {
+        <ul class="space-y-2">
+          @for (subtask of subtasks; track $index; let i = $index) {
+            <li class="flex items-center gap-2">
+              <input type="text"
+                     [value]="subtask"
+                     (blur)="onSubtaskBlur(i, $event)"
+                     class="flex-1 bg-transparent text-custom-text-main dark:text-custom-text-main-dark border border-custom-border dark:border-custom-border-dark rounded p-1 text-sm focus:border-custom-accent focus:outline-none"
+                     placeholder="Nueva subtarea"
+                     [readonly]="shouldApplyRestrictions" />
+              @if (!shouldApplyRestrictions) {
+                <button type="button"
+                        class="text-custom-text-secondary hover:text-custom-error"
+                        (click)="removeSubtask(i)">
+                  <mat-icon>remove_circle_outline</mat-icon>
+                </button>
+              }
+            </li>
+          }
+        </ul>
+      } @else {
+        <p class="text-custom-text-secondary dark:text-custom-text-secondary-dark text-sm">
+          No contiene subtareas
+        </p>
+      }
+    </div>
+
+    <!-- Acciones -->
+    <div class="flex gap-3">
+      <button type="button"
+              class="flex-1 py-2 px-4 bg-custom-panel dark:bg-custom-panel-dark text-custom-text-main dark:text-custom-text-main-dark border border-custom-border dark:border-custom-border-dark rounded hover:bg-custom-primary-light dark:hover:bg-custom-input-background-dark transition-colors"
+              (click)="closeForm()">
+        Cancelar
+      </button>
+      <button type="submit"
+              class="flex-1 py-2 px-4 bg-custom-accent text-white rounded hover:bg-custom-accent-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              [disabled]="taskForm.invalid">
+        Crear Tarea
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,190 @@
+<form
+  [formGroup]="signupForm"
+  (ngSubmit)="signup(signupForm)"
+  class="mx-auto p-10 flex flex-col gap-5 bg-custom-panel dark:bg-transparent max-w-125 lg:max-w-200 rounded-lg shadow-xl my-10"
+>
+  <div class="flex flex-col lg:flex-row lg:gap-5">
+    <div class="flex flex-col gap-4 w-full lg:w-1/2">
+      <fieldset class="flex flex-col">
+        <label for="firstName" class="text-sm font-bold">Nombre</label>
+        <input
+          type="text"
+          formControlName="first_name"
+          id="firstName"
+            class="px-4 py-2 mt-2 bg-custom-background dark:bg-black/20 border border-2 border-custom-border outline-transparent rounded-lg text-base hover:border-custom-accent focus:outline-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+          [class]="getValidationStyleClasses('first_name', ['required', 'minlength', 'maxlength'])"
+        />
+        @for (error of getErrors('first_name'); track $index) {
+          <p class="pl-1 mt-1 italic text-sm text-custom-error">{{ error }}</p>
+        }
+      </fieldset>
+      <fieldset class="flex flex-col">
+        <label for="lastName" class="text-sm font-bold">Apellidos</label>
+        <input
+          type="text"
+          formControlName="last_name"
+          id="lastName"
+          class="px-4 py-2 bg-custom-background dark:bg-black/20 mt-2 border border-2 border-custom-border outline-transparent rounded-lg text-base hover:border-custom-accent focus:outline-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+          [class]="getValidationStyleClasses('last_name', ['required', 'minlength', 'maxlength'])"
+        />
+        @for (error of getErrors('last_name'); track $index) {
+          <p class="pl-1 mt-1 italic text-sm text-custom-error">{{ error }}</p>
+        }
+      </fieldset>
+      <fieldset class="flex flex-col">
+        <label for="birthDate" class="text-sm font-bold">Fecha de nacimiento</label>
+        <input
+          type="date"
+          formControlName="birth_date"
+          id="birthDate"
+          placeholder="dd/mm/aaaa"
+          class="px-4 py-2 mt-2 placeholder:text-custom-muted bg-custom-background dark:bg-black/20 border border-2 border-custom-border outline-transparent rounded-lg text-base hover:border-custom-accent focus:outline-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+          [class]="getValidationStyleClasses('birth_date', ['required'])"
+        />
+
+        @for (error of getErrors('birth_date'); track $index) {
+          <p class="pl-1 mt-1 italic text-sm text-custom-error">{{ error }}</p>
+        }
+      </fieldset>
+      <fieldset class="flex flex-col">
+        <label for="role" class="text-sm font-bold">¿Deseas registrarte como profesor?</label>
+        <div class="flex items-center gap-2 mt-2">
+          <input
+            type="checkbox"
+            formControlName="role"
+            id="teacher"
+            class="px-4 py-2 accent-custom-accent-dark"
+          />
+          <label for="teacher" class="text-sm italic">Sí, soy profesor</label>
+        </div>
+        <p class="text-xs text-custom-muted italic mt-1">
+          Los estudiantes serán asignados por un profesor después del registro.
+        </p>
+      </fieldset>
+    </div>
+    <div class="flex flex-col gap-4 w-full lg:w-1/2">
+      <fieldset class="flex flex-col">
+        <label for="email" class="text-sm font-bold">Correo electrónico</label>
+        <div class="relative mt-2">
+          <img
+            class="w-6 h-6 absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
+            src="email.svg"
+            alt="Email icon"
+          />
+          <input
+            type="email"
+            formControlName="email"
+            id="email"
+            class="w-full pl-10 px-4 py-2 bg-custom-background dark:bg-black/20 border border-2 border-custom-border outline-transparent rounded-lg text-base hover:border-custom-accent focus:outline-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+            [class]="getValidationStyleClasses('email', ['required', 'email'])"
+          />
+        </div>
+
+        @for (error of getErrors('email'); track $index) {
+          <p class="pl-1 mt-1 italic text-sm text-custom-error">{{ error }}</p>
+        }
+      </fieldset>
+      <fieldset class="flex flex-col">
+        <label for="username" class="text-sm font-bold">Nombre de usuario</label>
+        <div class="relative mt-2">
+          <img
+            class="w-6 h-6 absolute left-2 top-1/2 -translate-y-1/2 pointer-events-none"
+            src="username.svg"
+            alt="Username icon"
+          />
+          <input
+            type="text"
+            formControlName="username"
+            id="username"
+            class="w-full pl-10 px-4 py-2 bg-custom-background dark:bg-black/20 border border-2 border-custom-border outline-transparent rounded-lg text-base hover:border-custom-accent focus:outline-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+            [class]="getValidationStyleClasses('username', ['required', 'minlength', 'maxlength'])"
+          />
+        </div>
+        @for (error of getErrors('username'); track $index) {
+          <p class="pl-1 mt-1 italic text-sm text-custom-error">{{ error }}</p>
+        }
+      </fieldset>
+      <fieldset class="flex flex-col">
+        <label for="password" class="text-sm font-bold">Contraseña</label>
+        <div class="relative mt-2">
+          @if (isVisiblePassword) {
+            <img
+              class="w-6 h-6 absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer"
+              (click)="isVisiblePassword = !isVisiblePassword"
+              src="visible_password.svg"
+              alt="Visible password icon"
+            />
+          } @else {
+            <img
+              class="w-6 h-6 absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer"
+              (click)="isVisiblePassword = !isVisiblePassword"
+              src="invisible_password.svg"
+              alt="Invisible password icon"
+            />
+          }
+          <input
+            [type]="isVisiblePassword ? 'text' : 'password'"
+            formControlName="password"
+            id="password"
+            class="w-full pl-10 px-4 py-2 bg-custom-background dark:bg-black/20 border border-2 border-custom-border outline-transparent rounded-lg text-base hover:border-custom-accent focus:outline-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+            [class]="getValidationStyleClasses('password', ['required', 'pattern'])"
+          />
+        </div>
+        @for (error of getErrors('password'); track $index) {
+          <p class="pl-1 mt-1 italic text-sm text-custom-error">{{ error }}</p>
+        }
+      </fieldset>
+      <fieldset class="flex flex-col">
+        <label for="password_confirmation" class="text-sm font-bold">
+          Confirmación de la contraseña
+        </label>
+        <div class="relative mt-2">
+          @if (isVisiblePassword) {
+            <img
+              class="w-6 h-6 absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer"
+              (click)="isVisiblePassword = !isVisiblePassword"
+              src="visible_password.svg"
+              alt="Visible password icon"
+            />
+          } @else {
+            <img
+              class="w-6 h-6 absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer"
+              (click)="isVisiblePassword = !isVisiblePassword"
+              src="invisible_password.svg"
+              alt="Invisible password icon"
+            />
+          }
+          <input
+            [type]="isVisiblePassword ? 'text' : 'password'"
+            formControlName="password_confirmation"
+            id="password_confirmation"
+            class="w-full pl-10 px-4 py-2 bg-custom-background dark:bg-black/20 border border-2 border-custom-border outline-transparent rounded-lg text-base hover:border-custom-accent focus:outline-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+            [class]="getValidationStyleClasses('password_confirmation', ['required', 'pattern'])"
+          />
+        </div>
+
+        @for (error of getErrors('password_confirmation'); track $index) {
+          <p class="pl-1 mt-1 italic text-sm text-custom-error">{{ error }}</p>
+        }
+      </fieldset>
+    </div>
+  </div>
+  <div class="flex flex-col items-center">
+    @if (
+      signupForm.get('password')?.touched &&
+      signupForm.get('password_confirmation')?.touched &&
+      signupForm.errors?.['passwordMismatch']
+    ) {
+      <p class="pl-1 mt-2 italic text-sm text-custom-error">Las contraseñas no coinciden.</p>
+    }
+    @if (serverError) {
+      <p class="pl-1 mt-1 italic text-sm text-custom-error">{{ serverError }}</p>
+    }
+    <button
+      type="submit"
+      class="w-fit mt-5 px-4 py-2 rounded-lg text-white bg-custom-accent hover:bg-custom-accent-dark dark:bg-purple-800 dark:hover:bg-purple-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+    >
+      Registrarse
+    </button>
+  </div>
+</form>

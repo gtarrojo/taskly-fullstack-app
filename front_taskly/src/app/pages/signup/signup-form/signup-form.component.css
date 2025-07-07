@@ -1,0 +1,16 @@
+/* Estilo para inputs autocompletados SIN errores */
+
+input:-webkit-autofill {
+  box-shadow: 0 0 0px 1000px var(--custom-background, #ffffff) inset !important;
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Estilo para inputs autocompletados CON errores */
+
+input:-webkit-autofill.error,
+input:-webkit-autofill.border-custom-error {
+  box-shadow: 0 0 0px 1000px #fee2e2 inset !important;
+  border-color: #ef4444 !important;
+  -webkit-text-fill-color: #000 !important;
+}

@@ -1,0 +1,37 @@
+{
+  "name": "backend_proyecto_final",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "dev": "nodemon index.ts",
+    "fix-emails": "ts-node emails.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "mysql2": "^3.14.1",
+    "nodemailer": "^7.0.3",
+    "puppeteer": "^24.11.1",
+    "puppeteer-core": "^24.11.1",
+    "uuid": "^11.1.0",
+    "yup": "^1.6.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/multer": "^1.4.13",
+    "@types/node": "^22.15.18",
+    "@types/nodemailer": "^6.4.17",
+    "@types/puppeteer": "^7.0.4",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}

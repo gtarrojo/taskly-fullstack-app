@@ -1,0 +1,31 @@
+<div
+  class="flex flex-wrap gap-6 p-4 bg-custom-panel dark:bg-custom-panel-dark rounded-lg shadow-sm mb-6"
+>
+  <label class="relative flex items-center cursor-pointer group">
+    <input
+      type="checkbox"
+      [checked]="filters().isUrgent"
+      (change)="toggleFilter('isUrgent')"
+      class="w-5 h-5 rounded border-2 border-gray-300 dark:border-gray-600 checked:bg-custom-primary checked:border-custom-primary focus:ring-2 focus:ring-custom-primary/20 transition-all duration-200 ease-in-out cursor-pointer "
+    />
+    <span
+      class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200"
+    >
+      Urgente
+    </span>
+  </label>
+
+  <label class="relative flex items-center cursor-pointer group">
+    <input
+      type="checkbox"
+      [checked]="filters().isImportant"
+      (change)="toggleFilter('isImportant')"
+      class="w-5 h-5 rounded border-2 border-gray-300 dark:border-gray-600 checked:bg-custom-primary checked:border-custom-primary focus:ring-2 focus:ring-custom-primary/20 transition-all duration-200 ease-in-out cursor-pointer"
+    />
+    <span
+      class="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200"
+    >
+      Importante
+    </span>
+  </label>
+</div>

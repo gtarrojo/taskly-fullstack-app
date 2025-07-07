@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "baseUrl": "./src",
+    // "typeRoots": ["./node_modules/@types", "./src/types"],
+    "moduleResolution": "node",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "include": ["src", "src/types", "emails.ts"],
+  "ts-node": {
+    "files": true
+  }
+}

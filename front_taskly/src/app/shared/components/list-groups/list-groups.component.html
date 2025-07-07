@@ -1,0 +1,30 @@
+<div class="project-list dark:bg-purple-100">
+  <div class="flex justify-center my-4">
+    <span class="px-2 font-semibold text-base-content/60">Tareas por tiempo</span>
+  </div>
+  <div class="flex flex-col gap-2">
+    <a (click)="selectTimeFilter('hoy')"
+       [class.selected-project]="selectedTimeFilter === 'hoy'"
+       class="flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer w-full dark:hover:bg-purple-900">
+      <mat-icon>today</mat-icon>
+      Hoy
+    </a>
+    <a (click)="selectTimeFilter('7dias')"
+       [class.selected-project]="selectedTimeFilter === '7dias'"
+       class="flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer w-full dark:hover:bg-purple-900">
+      <mat-icon>date_range</mat-icon>
+      Siguientes 7 días
+    </a>
+    <a (click)="selectTimeFilter('30dias')"
+       [class.selected-project]="selectedTimeFilter === '30dias'"
+       class="flex items-center gap-2 py-2 px-4 rounded-lg cursor-pointer w-full dark:hover:bg-purple-900">
+      <mat-icon>calendar_month</mat-icon>
+      Siguientes 30 días
+    </a>
+  </div>
+  
+  <!-- Componente de filtros adicionales -->
+  @if (!isCourse && showAdditionalFilters) {
+    <app-task-filter (filterChange)="onFilterChange($event)"></app-task-filter>
+  }
+</div>

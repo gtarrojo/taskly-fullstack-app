@@ -1,0 +1,40 @@
+<section class="scroll-header relative flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 sm:py-10 lg:py-24">
+  <h1 class="scroll-header__title w-full max-w-[70vw] sm:max-w-[90vw]md:max-w-[60vw] lg:max-w-3xl mb-6 text-2xl sm:text-4xl md:text-4xl lg:text-6xl font-bold leading-tight text-[var(--color-custom-text-main)] dark:text-white">
+    Haz del conocimiento una experiencia compartida
+  </h1>
+
+  <img 
+    [src]="isDarkMode ? 'arrow.gif' : 'arrow-dark.gif'"
+    alt="Scroll down"
+    class="scroll-arrow absolute left-1/2 bottom-32 w-12 sm:w-16 -translate-x-1/2 opacity-100 transition-opacity duration-300"
+  />
+
+  <p class="scroll-header__content max-w-xl mb-6 lg:mb-10 text-base sm:text-lg md:text-xl lg:text-xl text-[var(--color-custom-text-main)] dark:text-gray-300">
+    Descubre una plataforma educativa diseñada para estudiantes y profesores. Aprende a tu ritmo o crea cursos personalizados, gestiona tu progreso y conecta con una comunidad de aprendizaje dinámica.
+  </p>
+
+  <div class="scroll-header__buttons flex flex-row justify-center gap-4">
+    <a
+      routerLink="/signup"
+      class="text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3 font-medium rounded-md bg-custom-accent-dark text-white hover:bg-custom-accent dark:hover:bg-purple-700 transform hover:scale-105 transition-all duration-300 shadow-custom-md dark:bg-purple-800/40 dark:border-purple-400 dark:text-purple-100"
+    >
+      Empezar ahora
+    </a>
+    <a
+      routerLink="/login"
+      class="text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3 font-medium rounded-md border-2 bg-white text-custom-accent border-custom-accent hover:bg-custom-primary-light transform hover:scale-105 transition-all duration-300 dark:bg-transparent dark:border-custom-accent dark:text-custom-accent dark:hover:bg-transparent dark:hover:border-custom-accent dark:hover:text-custom-accent"
+    >
+      Ver cursos
+    </a>
+  </div>
+</section>
+
+<div class="w-full px-4 sm:px-0 pb-24 sm:pb-36 mb-24 flex justify-center">
+  <div class="scroll-zoom">
+    <img 
+      [src]="isDarkMode ? 'dashboard_dark.png' : 'dashboard.png'"
+      alt=""
+      class="w-full max-w-[90vw] md:max-w-[90vw] lg:w-full h-[25vh] md:h-[35vh] lg:h-[70vh] object-cover object-top rounded-3xl shadow-lg border-2 border-[var(--color-custom-accent)]"
+    />
+  </div>
+</div>

@@ -1,0 +1,133 @@
+<!-- Aside principal -->
+<aside
+  class="fixed bottom-0 left-0 w-full lg:w-80 lg:h-dvh bg-custom-background dark:bg-custom-background-dark shadow-xl z-10 transition-all duration-300 ease-in-out border-r border-custom-border dark:border-custom-border-dark"
+  [class.lg:-translate-x-full]="isCollapsed()"
+  [class.lg:opacity-0]="isCollapsed()"
+>
+  <!-- Contenido del aside -->
+  <div class="flex flex-row lg:flex-col justify-around items-center lg:justify-start lg:items-start gap-3 p-4 h-full">
+
+    <!-- Perfil del usuario -->
+    <div
+      class="w-fit lg:w-full p-2 rounded-full hover:bg-custom-primary-dark lg:hover:bg-custom-accent/20 transition-all duration-300 transform hover:scale-105 flex gap-3"
+      [routerLink]="['/dashboard', 'settings']"
+    >
+      <img
+        [src]="profile_image_endpoint + user.profile_image_url"
+        alt=""
+        class="w-7 h-7 lg:w-12 lg:h-12 object-cover object-center rounded-full"
+      />
+      @if (!isCollapsed()) {
+        <div class="hidden lg:flex flex-col">
+          <h3 class="text-sm font-bold text-custom-main">
+            {{ user.first_name }} {{ user.last_name }}
+          </h3>
+          <h4 class="text-xs text-custom-accent-dark dark:text-purple-300 font-bold">
+            {{ user.username }}
+          </h4>
+        </div>
+      }
+    </div>
+
+    <!-- Navegación -->
+    <div class="flex-1 flex lg:flex-col justify-between">
+      <ul class="flex flex-row lg:flex-col gap-3 justify-around items-center w-full">
+
+        <!-- Menú hamburguesa para móvil -->
+        <li class="sm:hidden p-2 flex items-center gap-3 rounded-full hover:bg-custom-primary-dark transition-all duration-300 transform hover:scale-105">
+          <mat-icon
+            class="w-7 h-7 object-fit object-cover block rounded-full"
+            (click)="showList = !showList"
+            aria-label="Icono de menú desplegable"
+          >
+            menu
+          </mat-icon>
+        </li>
+
+        <!-- Navegación desktop -->
+        <div class="hidden sm:flex lg:flex-col gap-3">
+          @for (item of navigationItems; track item.route) {
+            <li
+              [routerLink]="item.route"
+              class="p-2 lg:pr-4 flex items-center gap-3 rounded-full hover:bg-custom-primary-dark lg:hover:bg-custom-accent/20 transition-all duration-300 transform hover:scale-105"
+            >
+              <mat-icon
+                class="w-7 h-7 object-fit object-cover"
+                attr.aria-label="{{item.alt}}"
+              >
+                {{ item.icon }}
+              </mat-icon>
+              @if (!isCollapsed()) {
+                <label class="hidden lg:block text-lg font-bold">{{ item.label }}</label>
+              }
+            </li>
+          }
+        </div>
+
+        <!-- Menú móvil expandido -->
+        @if (showList) {
+          <div class="absolute bottom-24 left-0 w-full flex flex-wrap justify-around sm:hidden">
+            @for (item of navigationItems; track item.route) {
+              <li
+                [routerLink]="item.route"
+                class="p-2 flex items-center gap-3 rounded-full border-2 border-custom-accent-dark bg-custom-background dark:bg-black hover:bg-custom-primary-dark transition-all duration-300 transform hover:scale-105"
+              >
+                <mat-icon
+                  class="w-7 h-7 object-fit object-cover"
+                  attr.aria-label="{{item.alt}}"
+                >
+                  {{ item.icon }}
+                </mat-icon>
+              </li>
+            }
+          </div>
+        }
+      </ul>
+
+      <!-- Botón de cerrar sesión -->
+      <div class="self-center lg:self-start">
+        <li
+          class="p-2 lg:pr-4 flex items-center gap-3 rounded-full hover:bg-custom-primary-dark lg:hover:bg-custom-accent/20 transition-all duration-300 transform hover:scale-105"
+          (click)="logout()"
+        >
+          <mat-icon
+            class="w-7 h-auto object-fit object-cover"
+            aria-label="Icono de cerrar sesión"
+          >
+            logout
+          </mat-icon>
+          @if (!isCollapsed()) {
+            <label class="hidden lg:block text-lg font-bold">Cerrar sesión</label>
+          }
+        </li>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón para colapsar/expandir (solo desktop) -->
+  <button
+    class="lg:flex absolute -right-3 top-4 size-7 bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 rounded-full hidden items-center justify-center text-white transition-all duration-300 transform hover:scale-110 z-20 shadow-lg hover:shadow-xl border-2 border-white dark:border-gray-800"
+    (click)="toggleCollapse()"
+    [attr.aria-label]="isCollapsed() ? 'Expandir menú' : 'Colapsar menú'"
+  >
+    <mat-icon
+      class="w-3 h-3 transition-transform duration-300"
+      [class.rotate-180]="isCollapsed()"
+    >
+      chevron_left
+    </mat-icon>
+  </button>
+</aside>
+
+<!-- Botón flotante para mostrar el aside cuando esté colapsado -->
+@if (isCollapsed()) {
+  <button
+    class="lg:flex fixed left-4 top-4 size-9 bg-purple-600 hover:bg-purple-700 dark:bg-purple-500 dark:hover:bg-purple-600 rounded-full hidden items-center justify-center text-white transition-all duration-300 transform hover:scale-110 z-30 shadow-lg hover:shadow-xl border-2 border-white dark:border-gray-800"
+    (click)="toggleCollapse()"
+    aria-label="Mostrar menú"
+  >
+    <mat-icon class="size-4">
+      menu
+    </mat-icon>
+  </button>
+}

@@ -1,0 +1,53 @@
+<fieldset class="flex flex-col">
+  <div class="flex flex-col gap-2">
+    <label [for]="controlName" class="text-sm font-bold">{{ label }}</label>
+
+    <div class="flex items-center gap-3">
+      @if (isEditing) {
+        <input
+          [type]="type"
+          [id]="controlName"
+          [formControl]="control"
+          [class]="getValidationStyleClasses(controlName, validation)"
+          class="w-full px-4 py-2 bg-custom-background dark:bg-black/20 border-2 border-custom-border outline-transparent rounded-lg text-base hover:border-custom-accent focus:outline-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+          (keydown.enter)="onEnterKey($event)"
+        />
+      } @else {
+        <p
+          class="w-full px-4 py-2 text-base bg-custom-background dark:bg-black/20 border-2 border-custom-border rounded-lg"
+        >
+          {{ value }}
+        </p>
+      }
+      @if (isEditing) {
+        @if (control.valid) {
+          <img
+            src="cancel.svg"
+            alt="Cancelar edición"
+            class="w-4 h-4 cursor-pointer"
+            (click)="onCancelEdit()"
+          />
+        }
+        <img
+          src="check-grey.svg"
+          alt="Guardar cambios"
+          class="w-4 h-4 cursor-pointer"
+          [class.opacity-50]="!control.valid"
+          [class.cursor-not-allowed]="!control.valid"
+          [style.pointer-events]="!control.valid ? 'none' : 'auto'"
+          (click)="onSaveEdit()"
+        />
+      } @else {
+        <img src="edit.svg" alt="Editar" class="w-4 h-4 cursor-pointer" (click)="onToggleEdit()" />
+      }
+    </div>
+
+    @if (isEditing && control.touched && control.invalid) {
+      <div class="text-sm text-custom-error font-medium mt-1 list-disc list-inside space-y-1">
+        @for (error of getErrors(controlName); track error) {
+          <p>{{ error }}</p>
+        }
+      </div>
+    }
+  </div>
+</fieldset>

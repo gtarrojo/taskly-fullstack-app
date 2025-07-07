@@ -1,0 +1,47 @@
+<div class="flex-1 flex flex-col items-center" [class.overflow-hidden]="showCourseForm">
+  @if (user.role === 'teacher') {
+    <button
+      class="mt-5 px-6 py-3 text-xl text-black rounded-full border border-custom-accent-dark bg-custom-background hover:bg-custom-accent-dark dark:bg-purple-100 dark:hover:bg-purple-900 dark:border-purple-900 transition-all duration-300 transform hover:scale-105 hover:text-white shadow-lg hover:shadow-3xl"
+      (click)="showCourseForm = true"
+    >
+      Crear curso
+    </button>
+  }
+  <div class="w-full p-10 flex-1 flex justify-center items-center flex-wrap gap-8">
+    @for (course of courses; track $index) {
+      <div
+        [routerLink]="['/dashboard', 'courses', 'view', course.uuid]"
+        class="flex flex-col justify-between gap-1 w-60 h-fit rounded-lg bg-custom-background dark:bg-custom-background-dark dark:shadow-xs dark:shadow-white transition-all duration-300 transform hover:scale-105 shadow-lg lg:hover:shadow-xl dark:hover:shadow-sm"
+      >
+        <img
+          [src]="course_image_endpoint + course.course_image_url"
+          [alt]="'Imagen del curso ' + course.title"
+          class="h-35 rounded-lg bg-gray-900 dark:bg-gray-500 object-cover object-center"
+        />
+        <div class="p-4 flex flex-col gap-2">
+          <div class="flex flex-col">
+            <h3 class="text-sm font-bold truncate">{{ course.title }}</h3>
+            <p class="text-xs text-custom-text-secondary truncate">{{ course.teacher }}</p>
+          </div>
+          <div>
+            <p class="course-description text-xs">{{ course.description }}</p>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <p class="text-[2.5rem] font-bold text-center">¡Vaya! No tienes ningún curso todavía.</p>
+    }
+  </div>
+  @if (showCourseForm) {
+    <div class="fixed inset-0 z-50 bg-black/30 flex justify-center items-center overflow-hidden">
+      <div class="w-full p-5 flex justify-center items-center">
+        <app-course-form
+          [user]="user"
+          [type]="'create'"
+          (cancel)="showCourseForm = false"
+          (closeCourseForm)="updateGrid()"
+        ></app-course-form>
+      </div>
+    </div>
+  }
+</div>

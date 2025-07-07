@@ -1,0 +1,54 @@
+<div class="task-item cursor-pointer select-none transition-shadow"
+     [class.selected-task]="isSelected"
+     [class.completed-task]="task.is_completed"
+     (click)="selectTask.emit(task)">
+  <div class="task-header flex items-center gap-2">
+    @if (!hideCompletedCheckbox) {
+      <input type="checkbox"
+        [checked]="task.is_completed"
+        (change)="toggleTask.emit(task)"
+        (click)="$event.stopPropagation()"
+        class="task-checkbox" >
+    }
+    <div class="flex flex-1 items-center min-w-0 justify-between">
+      <h4 class="task-title truncate" 
+          [class.completed]="task.is_completed"
+          [class.overdue]="isTaskOverdue()">
+        {{task.title}}
+      </h4>
+      <div class="flex items-center gap-2">
+        @if (task.due_date) {
+          <span class="task-due-date ml-2" 
+                [class.completed]="task.is_completed"
+                [class.overdue]="isTaskOverdue()">
+            {{formatDueDate(task.due_date)}}
+          </span>
+        }
+        @if (task.subtasks.length > 0) {
+          <button class="toggle-subtasks-btn"
+                  (click)="toggleExpand.emit(task.id); $event.stopPropagation()">
+            <svg [class.rotate-180]="expanded" class="transition-transform duration-200 w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="task-content">
+    <p class="task-description" [class.completed]="task.is_completed">
+      {{task.description}}
+    </p>
+    @if (expanded) {
+      <ul class="subtasks-list">
+        @for (subtask of task.subtasks; track subtask.id) {
+          <li class="subtask-item" [class.completed-subtask]="subtask.is_completed">
+            <span class="subtask-name" [class.completed]="subtask.is_completed">
+              {{subtask.title}}
+            </span>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</div>

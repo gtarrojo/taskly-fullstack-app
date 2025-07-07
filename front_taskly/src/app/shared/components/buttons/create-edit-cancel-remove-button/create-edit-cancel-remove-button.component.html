@@ -1,0 +1,16 @@
+<div
+  class="w-8 h-8 text-custom-muted-dark dark:text-inherit rounded-full hover:bg-custom-background/75 transition-all duration-300 transform hover:scale-110 flex items-center justify-center cursor-pointer"
+>
+  @if (type === 'create') {
+    <mat-icon class="w-6 h-6">add</mat-icon>
+  }
+  @if (type === 'edit') {
+    <mat-icon class="w-6 h-6">edit</mat-icon>
+  }
+  @if (type === 'cancel') {
+    <mat-icon class="w-6 h-6">clear</mat-icon>
+  }
+  @if (type === 'remove') {
+    <mat-icon class="w-6 h-6">delete</mat-icon>
+  }
+</div>

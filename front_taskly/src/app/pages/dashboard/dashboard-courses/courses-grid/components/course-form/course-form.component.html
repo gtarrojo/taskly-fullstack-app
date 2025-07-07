@@ -1,0 +1,77 @@
+<div
+  class="w-[calc(100vw-2.5rem)] py-10 mx-5 max-w-4xl max-h-[calc(100vh-2.5rem)] overflow-auto rounded-lg"
+>
+  <form
+    [formGroup]="courseForm"
+    (ngSubmit)="type === 'create' ? createCourse(courseForm) : editCourse(courseForm)"
+    class="h-full overflow-auto p-5 lg:p-10 flex flex-col gap-5 bg-custom-primary-light dark:bg-custom-background-dark md:min-w-125 lg:min-w-200 rounded-lg shadow-sm shadow-custom-accent-dark"
+  >
+    <div class="flex flex-col gap-4 w-full">
+      <h3 class="text-xl font-bold mb-3">Datos del curso</h3>
+      <fieldset class="flex flex-col gap-2">
+        <label for="title" class="text-base font-bold">Título del curso</label>
+        <input
+          type="text"
+          formControlName="title"
+          id="title"
+          class="px-4 py-2 mt-2 bg-custom-background dark:bg-custom-input-background-dark border-b-2 border-b-custom-border outline-transparent text-base hover:border-b-custom-accent focus:outline-b-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+        />
+      </fieldset>
+
+      <fieldset class="flex flex-col gap-2">
+        <label for="content" class="text-base font-bold">Descripción del curso</label>
+        <textarea
+          type="text"
+          formControlName="description"
+          id="content"
+          class="resize-none px-4 py-2 mt-2 bg-custom-background dark:bg-custom-input-background-dark border-b-2 border-b-custom-border outline-transparent text-base hover:border-b-custom-accent focus:outline-b-custom-accent-dark focus:shadow-md focus:shadow-custom-accent transition-all duration-300 transform"
+          [value]="course.description"
+          rows="15"
+        ></textarea>
+      </fieldset>
+
+      <fieldset class="flex flex-col gap-2">
+        <label for="course-image" class="text-base font-bold cursor-pointer">
+          Imagen del curso
+        </label>
+        <input
+          type="file"
+          name="course-image"
+          id="course-image"
+          class="bg-custom-background block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 file:bg-gray-50 file:border-0 file:me-4 file:py-3 file:px-4 dark:file:bg-neutral-700 dark:file:text-neutral-400 file:cursor-pointer cursor-pointer"
+          (change)="onImageSelected($event)"
+        />
+      </fieldset>
+    </div>
+
+    <div>
+      <h3 class="text-xl font-bold mb-3">Planificación</h3>
+      <app-unit-form (updatePlanning)="planning = $event" [planning]="planning"></app-unit-form>
+    </div>
+
+    <app-students-search-form
+      (updateStudents)="students = $event"
+      [students]="students"
+    ></app-students-search-form>
+
+    @if (courseFormError) {
+      <p class="pl-1 mt-1 italic text-sm text-custom-error text-center">{{ courseFormError }}</p>
+    }
+
+    <div class="flex justify-center gap-5">
+      <button
+        type="button"
+        class="w-fit mt-5 px-4 py-2 rounded-lg dark:hover:text-white bg-custom-background hover:bg-custom-accent-dark dark:text-black dark:bg-purple-100 dark:hover:bg-purple-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+        (click)="cancelCourseForm()"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="w-fit mt-5 px-4 py-2 rounded-lg text-white bg-custom-accent hover:bg-custom-accent-dark dark:bg-purple-800 dark:hover:bg-purple-900 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+      >
+        {{ type === 'create' ? 'Crear' : 'Guardar' }}
+      </button>
+    </div>
+  </form>
+</div>

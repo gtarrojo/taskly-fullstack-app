@@ -1,0 +1,13 @@
+<div class="w-full h-full min-h-[300px] overflow-hidden">
+  <full-calendar
+    [options]="calendarOptions()"
+  >
+    <ng-template #eventContent let-arg>
+      <div class="flex items-center justify-center">
+        <div class="w-2 h-2 rounded-full p-0"
+             [style.background-color]="getPriorityColorFn(arg.event.extendedProps.task)">
+        </div>
+      </div>
+    </ng-template>
+  </full-calendar>
+</div>
